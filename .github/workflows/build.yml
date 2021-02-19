@@ -1,0 +1,29 @@
+name: Build
+on:
+  schedule:
+  - cron: "0 8 * * 0"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: numpy/numpy
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.0-alpha - 3.10.x
+
+    - run: |
+        pip install -U setuptools wheel Cython
+        # pip install -r test_requirements.txt
+        mkdir openblas
+        cp $(python tools/openblas_support.py) openblas/openblas.a
+        python -c "from tools import openblas_support; openblas_support.make_init('numpy')"
+        pip wheel --no-build-isolation --no-use-pep517 --wheel-dir=dist .
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: dist
+        name: numpy-nightly-cp310-win_amd64
