@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: 3.11.0-alpha - 3.11.x
 
-    - run: pip install -U setuptools wheel Cython # pip install -r test_requirements.txt
+    - run: pip install -U setuptools<60 wheel Cython # pip install -r test_requirements.txt
     
     - run: |
         mkdir openblas
