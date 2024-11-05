@@ -12,21 +12,19 @@ jobs:
       with:
         repository: numpy/numpy
         ref: v1.26.5
+        submodules: true
+        # fetch-depth: 0
 
     - uses: actions/setup-python@main
       with:
         python-version: 3.13
 
-    # - run: pip install -U setuptools<60 wheel Cython # pip install -r test_requirements.txt
-    # - run: pip install https://github.com/cython/cython/archive/refs/heads/master.zip
 
-    - run: |
-        #mkdir openblas
-        #cp $(python tools/openblas_support.py) openblas/openblas.a
-        #python -c "from tools import openblas_support; openblas_support.make_init('numpy')"
+    - run: choco install -y pkgconfiglite
 
-    # - run: pip wheel -v --no-build-isolation --no-use-pep517 --wheel-dir=dist .
-    - run: pip wheel -v --wheel-dir=dist .
+    - uses: pypa/cibuildwheel@main
+      env:
+        CIBW_BUILD: cp313-win_amd64
 
     - uses: actions/upload-artifact@main
       with:
