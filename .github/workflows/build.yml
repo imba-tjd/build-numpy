@@ -21,6 +21,7 @@ jobs:
 
     - run: |
         choco install -y pkgconfiglite
+        pip install -r build_requirements.txt
         pip wheel . -v --wheel-dir=dist -Csetup-args="--vsenv" -Csetup-args="-Dblas=none" -Csetup-args="-Dlapack=none" -Csetup-args="-Dallow-noblas=true"
 
     - uses: actions/upload-artifact@main
