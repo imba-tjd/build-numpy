@@ -5,11 +5,19 @@ This repo builds Numpy via GitHub Actions with the versions of:
 * Windows X64
 * Python 3.13
 * Numpy 1.26.5
+* MSVC
 * No Blas
 
 You can download the build from GitHub Actions Artifacts (require login). Unzip, `pip install numpy-1.26.5-cp313-cp313-win_amd64.whl`.
 
+## Remarks
+
 The build command logic is from [azure-steps-windows.yml](https://github.com/numpy/numpy/blob/v1.26.5/azure-steps-windows.yml).
+
+If you try to use [.github/workflows/wheels.yml](https://github.com/numpy/numpy/blob/v1.26.5/.github/workflows/wheels.yml), you will fail due to
+  1. *This job was skipped*. **Solved** by prepending *[wheel build]* to the commit messages **and** removing *if: github.repository == 'numpy/numpy'*. This is mentioned on the top of wheels.yml.
+  2. *cibuildwheel: No build identifiers selected. Here we go!*. This is due to old version of *pypa/cibuildwheel*. **Solved** by changing version ref tag to *main*.
+  3. *End-of-central-directory signature not found...; unzip: cannot find zipfile directory in one of openblas_win-amd64.zip ..., period.* This is due to unaccessible to [openblas64_-v0.3.23-293-gc2f4bdbb-win_amd64-gcc_10_3_0.zip](https://anaconda.org/scientific-python-nightly-wheels/openblas-libs/v0.3.23-293-gc2f4bdbb/download/openblas64_-v0.3.23-293-gc2f4bdbb-win_amd64-gcc_10_3_0.zip) because the Anaconda website requires login and no one mentioned this.
 
 ```py
 > import numpy; numpy.show_config()
