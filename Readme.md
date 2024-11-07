@@ -6,9 +6,11 @@ This repo builds Numpy via GitHub Actions with the versions of:
 * Python 3.13
 * Numpy 1.26.5
 * MSVC
-* No Blas
+* No Blas (PR welcome)
 
-You can download the build from GitHub Actions Artifacts (require login). Unzip, `pip install numpy-1.26.5-cp313-cp313-win_amd64.whl`.
+You can download the build from GitHub Actions Artifacts (require login) or Release (if you trust me) or fork to your repo and use Actions to build.
+
+Unzip, `pip install numpy-1.26.5-cp313-cp313-win_amd64.whl`.
 
 ## Remarks
 
